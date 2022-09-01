@@ -12,7 +12,17 @@ import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
 
 
+const useLocalStorage = (key, defaultValue) => {
+  const [state, setState] = useState(() => {
+    return JSON.parse(localStorage.getItem(key)) ?? defaultValue
+  });
 
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [state]);
+
+  return [state, setState];
+}
 
 //? * +++++++++++++++++++++++++++ CLASS ++++++++++++++++++++++++++++++++++
 // export class App extends Component {
@@ -51,26 +61,30 @@ export const App = () => {
   //! При первом RENDER из localStorage записываем в contacts
   //! Если localStorage = null, записываем в contacts = []
   //! lazy state initialization contacts
-  const [contacts, setContacts] = useState( () =>
-    JSON.parse(localStorage.getItem('contacts')) ?? []);
+  const [contacts, setContacts] = useLocalStorage("contacts", []); //! 2-ой вариант
   
+  //? 1-ый вариант
+  // const [contacts, setContacts] = useState(() => {
+  //   // console.log("Делаем начальное состояние для useState ===> contacts"); //!
+  //   return JSON.parse(localStorage.getItem('contacts')) ?? []
+  // });
   
   //! useState ===> filter (аналог this.state.filter)
   const [filter, setFilter] = useState('');
 
-  
-  //! Аналог componentDidUpdate():
-  //! При изменении contacts записываем contacts в localStorage + Render
-  useEffect(() => {
-    saveLocalStorage(contacts);
-  }, [contacts]);
+  //? 1-ый вариант
+  // //! Аналог componentDidUpdate():
+  // //! При изменении contacts записываем contacts в localStorage + Render
+  // useEffect(() => {
+  //   saveLocalStorage(contacts);
+  // }, [contacts]);
 
   
-
-  //! Запись contacts в localStorage
-  const saveLocalStorage = (contacts) => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  };
+  //? 1-ый вариант
+  // //! Запись contacts в localStorage
+  // const saveLocalStorage = (contacts) => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // };
 
 
 
