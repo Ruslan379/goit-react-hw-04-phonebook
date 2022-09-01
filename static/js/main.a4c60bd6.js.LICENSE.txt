@@ -38,6 +38,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-//! Запись contacts в localStorage
+//! NEW - передача пропсов name и number из ContactForm
 
-//! записываю contacts в хранилище localStorage:
+//! alert с предупреждением о наявности контакта
+
+//! Добавление контакта в this.state.contacts
