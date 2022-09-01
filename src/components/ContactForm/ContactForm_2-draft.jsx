@@ -1,3 +1,4 @@
+// import React, { Component } from 'react'; //?
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,6 +9,15 @@ import css from 'components/ContactForm/ContactForm.module.css' //todo = ста�
 
 
 
+// * +++++++++++++++++++++++++++ CLASS ++++++++++++++++++++++++++++++++++
+//?
+// export class ContactForm extends Component {
+//   state = {
+//     name: '',
+//     number: ''
+//   };
+
+// contactInputId = nanoid();
 
 export const ContactForm = ({ onSubmit }) => {
 
@@ -24,6 +34,7 @@ export const ContactForm = ({ onSubmit }) => {
   //! Ввод значений в поля инпутов
   const handleChange = event => {
     const { name, value } = event.currentTarget;
+    // this.setState({ [name]: value }); //?
 
     switch (name) {
       case 'name':
@@ -43,6 +54,7 @@ export const ContactForm = ({ onSubmit }) => {
 
   //! Очистка полей ФОРМЫ
     const reset = () => {
+    // this.setState({ name: '', number: '' }); //?
       setName('');
       setNumber('');
   };
@@ -52,22 +64,32 @@ export const ContactForm = ({ onSubmit }) => {
   //! NEW - Submit ФОРМЫ
   const handleSubmit = event => {
     event.preventDefault();
+    // const { name, number } = this.state; //?
+    // this.props.onSubmit(name, number); //?
     //! Передача значений State (name, number) в App
     onSubmit(name, number);
+    // this.reset(); //?
     reset(); 
   };
 
 
 
+
+// ? +++++++++++++++++++++++++++ RENDER ++++++++++++++++++++++++++++++++++
+  // render() { //?
+    // const { name, number } = this.state; //?
+
 // * +++++++++++++++++++++++++++ MARKUP ++++++++++++++++++++++++++++++++++
     return (
       <form
         className={css.Form}
+        // onSubmit={this.handleSubmit} //?
         onSubmit={handleSubmit}
       >
 
         <label
           className={css.FormLabel}
+          // htmlFor={this.contactInputId} //?
           htmlFor={contactInputId}
         >
             Name
@@ -80,7 +102,9 @@ export const ContactForm = ({ onSubmit }) => {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
               value={name}
+              // onChange={this.handleChange} //?
               onChange={handleChange}
+              // id={this.contactInputId} //?
               id={contactInputId}
             />
           </label>
@@ -88,6 +112,7 @@ export const ContactForm = ({ onSubmit }) => {
 
         <label
           className={css.FormLabel}
+          // htmlFor={this.contactInputId} //?
           htmlFor={contactInputId}
         >
             Number
@@ -100,7 +125,9 @@ export const ContactForm = ({ onSubmit }) => {
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
               value={number}
+              // onChange={this.handleChange} //?
               onChange={handleChange}
+              // id={this.contactInputId} //?
               id={contactInputId}
             />
           </label>
@@ -115,9 +142,8 @@ export const ContactForm = ({ onSubmit }) => {
     );
 
   } 
+// } //?
 
-
-  
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
