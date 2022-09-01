@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,107 +14,134 @@ import { ContactList } from 'components/ContactList/ContactList';
 
 
 
-// * +++++++++++++++++++++++++++ CLASS ++++++++++++++++++++++++++++++++++
-export class App extends Component {
-  state = {
-    contacts: [],
-    filter: ''
-  };
+//? * +++++++++++++++++++++++++++ CLASS ++++++++++++++++++++++++++++++++++
+// export class App extends Component {
+//   state = {
+//     contacts: [],
+//     filter: ''
+//   };
 
-
+export const App = () => {
 
 // * +++++++++++++++++++++++++++ МЕТОДЫ ++++++++++++++++++++++++++++++++++
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
+  // componentDidMount() {
+  //   const contacts = localStorage.getItem('contacts');
+  //   const parsedContacts = JSON.parse(contacts);
 
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
-    }
-  }
+  //   if (parsedContacts) {
+  //     this.setState({ contacts: parsedContacts });
+  //   }
+  // }
 
 
-  componentDidUpdate(_, prevState) {
-    const prevContacts = prevState.contacts;
-    const nextContacts = this.state.contacts;
+  // componentDidUpdate(_, prevState) {
+  //   const prevContacts = prevState.contacts;
+  //   const nextContacts = this.state.contacts;
 
-    if (nextContacts !== prevContacts) {
-      //! записываю contacts в хранилище localStorage:
-      this.saveLocalStorage(nextContacts);
-    }
-  }
+  //   if (nextContacts !== prevContacts) {
+  //     //! записываю contacts в хранилище localStorage:
+  //     this.saveLocalStorage(nextContacts);
+  //   }
+  // }
 
+
+  const [contacts, setContacts] = useState( () =>
+    JSON.parse(localStorage.getItem('contacts')) ?? []);
+  
+  // console.log("useState contacts: ", contacts); //!
+  
+  const [filter, setFilter] = useState('');
 
   //! Запись contacts в localStorage
-  saveLocalStorage = (contacts) => {
+  const saveLocalStorage = (contacts) => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   };
+
+  useEffect(() => {
+    saveLocalStorage(contacts);
+  }, [contacts]);
+
+
+  
 
 
 
   //! Добавление контакта в this.state.contacts
-  addСontact = (name, number) => {
+  const addСontact = (name, number) => {
     const contact = {
       id: nanoid(),  
       name,
       number,
     };
-    this.setState(({ contacts }) => ({
-      contacts: [...contacts, contact],
-    }));
+    //?
+    // this.setState(({ contacts }) => ({
+    //   contacts: [...contacts, contact],
+    // }));
+
+    setContacts(prevState => 
+      [...prevState, contact]);
   };
 
 
 
   //! NEW - передача пропсов name и number из ContactForm
   //! alert с предупреждением о наявности контакта
-  formSubmitHandler = (name, number) => {
-    const contacts = this.state.contacts 
+  const formSubmitHandler = (name, number) => {
+    // const contacts = this.state.contacts  //?
     
     if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
       alert(`${name} is already in contacts.`);
       toast.warning(`${name} уже есть в контактах.`); 
       return;
     } else {
-      this.addСontact(name, number); 
+      // this.addСontact(name, number); //?
+      addСontact(name, number); 
       }
   };
 
 
 
   //! запись значения из input-(Find contacts by name) в this.setState.filter
-  changeFilter = (event) => {
-    this.setState({ filter: event.currentTarget.value });
+  const changeFilter = (event) => {
+    // this.setState({ filter: event.currentTarget.value }); //?
+    setFilter(event.currentTarget.value); 
   };
 
 
 
   //! Создание нового массива объектов из this.state.contacts с учетом значения поиска из this.state.filter
-  getVisibleContacts = () => {
-    const { filter, contacts } = this.state;
+  const getVisibleContacts = () => {
+    // const { filter, contacts } = this.state; //?
     const normalizedFilter = filter.toLowerCase();
+
+    // console.log("getVisibleContacts contacts: ", contacts); //!
+    
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter),
+      (contact.name.toLowerCase()).includes(normalizedFilter),
     );
   };
 
 
 
   //! Создание нового массива объектов из this.state.contacts с учетом удаления контакта по его contact.id
-  deleteTodo = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-    }));
+  const deleteTodo = contactId => {
+    // this.setState(prevState => ({
+    //   contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    // }));
+
+    setContacts(prevState => (prevState.filter(contact => contact.id !== contactId)));
   };
 
 
 
-// * +++++++++++++++++++++++++++ RENDER ++++++++++++++++++++++++++++++++++
-  render() {
+//? * +++++++++++++++++++++++++++ RENDER ++++++++++++++++++++++++++++++++++
+  // render() { //?
 
-    const { contacts, filter } = this.state;
-    const visibleContacts = this.getVisibleContacts();
-    const totalContacts = contacts.length;
+    // const { contacts, filter } = this.state; //?
+  // const visibleContacts = this.getVisibleContacts(); //?
+  
+  const visibleContacts = getVisibleContacts();
+  const totalContacts = contacts.length;
 
 
 
@@ -124,22 +152,25 @@ export class App extends Component {
 
         <h1>Phonebook</h1>
 
-        <ContactForm onSubmit={this.formSubmitHandler} />
+        {/* <ContactForm onSubmit={this.formSubmitHandler} /> //? */}
+        <ContactForm onSubmit={formSubmitHandler} />
 
         <h2>Contacts</h2>
         <p>Total: {totalContacts}</p>
 
         <Filter
           value={filter}
-          onChange={this.changeFilter}
+          // onChange={this.changeFilter} //?
+          onChange={changeFilter}
         />
         
         <ContactList
           visibleContacts={visibleContacts}
-          onDeleteTodo={this.deleteTodo}
+          // onDeleteTodo={this.deleteTodo} //?
+          onDeleteTodo={deleteTodo}
         />
 
       </Container>
     );
   }
-}
+// } //?
