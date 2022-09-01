@@ -38,8 +38,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-//! NEW - передача пропсов name и number из ContactForm
+//! lazy state initialization contacts
 
-//! alert с предупреждением о наявности контакта
+//! useState ===> contacts (аналог this.state.contacts)
+
+//! useState ===> filter (аналог this.state.filter)
+
+//! useState ===> name (аналог this.state.name)
+
+//! Аналог componentDidMount()
+
+//! Аналог componentDidUpdate():
 
 //! Добавление контакта в this.state.contacts
+
+//! Если localStorage = null, записываем в contacts = []
+
+//! Запись contacts в localStorage
+
+//! Передача значений State (name, number) в App
+
+//! При изменении contacts записываем contacts в localStorage + Render
+
+//! При первом RENDER из localStorage записываем в contacts
