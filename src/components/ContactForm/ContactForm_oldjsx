@@ -1,5 +1,4 @@
-// import React, { Component } from 'react'; //?
-import { useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { nanoid } from 'nanoid';
@@ -10,84 +9,57 @@ import css from 'components/ContactForm/ContactForm.module.css' //todo = ста�
 
 
 // * +++++++++++++++++++++++++++ CLASS ++++++++++++++++++++++++++++++++++
-//?
-// export class ContactForm extends Component {
-//   state = {
-//     name: '',
-//     number: ''
-//   };
 
-// contactInputId = nanoid();
+export class ContactForm extends Component {
+  state = {
+    name: '',
+    number: ''
+  };
 
-export const ContactForm = ({ onSubmit }) => {
 
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const contactInputId = nanoid();
+  contactInputId = nanoid();
   
 
 // * +++++++++++++++++++++++++++ МЕТОДЫ ++++++++++++++++++++++++++++++++++
   //! Ввод значений в поля инпутов
-  const handleChange = event => {
+  handleChange = event => {
     const { name, value } = event.currentTarget;
-    // this.setState({ [name]: value }); //?
-
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-
-      case 'number':
-        setNumber(value);
-        break;
-
-      default:
-        return;
-    }
+    this.setState({ [name]: value });
   };
 
 
 
   //! Очистка полей ФОРМЫ
-    const reset = () => {
-    // this.setState({ name: '', number: '' }); //?
-      setName('');
-      setNumber('');
+  reset = () => {
+    this.setState({ name: '', number: '' });
   };
 
 
 
   //! NEW - Submit ФОРМЫ
-  const handleSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
-    // const { name, number } = this.state; //?
-    // this.props.onSubmit(name, number); //?
-    onSubmit(name, number);
-    // this.reset(); //?
-    reset(); 
+    const { name, number } = this.state; 
+    this.props.onSubmit(name, number);
+    this.reset();
   };
 
 
 
 
-// ? +++++++++++++++++++++++++++ RENDER ++++++++++++++++++++++++++++++++++
-  // render() { //?
-    // const { name, number } = this.state; //?
+// * +++++++++++++++++++++++++++ RENDER ++++++++++++++++++++++++++++++++++
+  render() {
+    const { name, number } = this.state;
 
 // * +++++++++++++++++++++++++++ MARKUP ++++++++++++++++++++++++++++++++++
     return (
       <form
-        className={css.Form}
-        // onSubmit={this.handleSubmit} //?
-        onSubmit={handleSubmit}
-      >
+          className={css.Form}
+          onSubmit={this.handleSubmit}>
 
         <label
           className={css.FormLabel}
-          // htmlFor={this.contactInputId} //?
-          htmlFor={contactInputId}
-        >
+          htmlFor={this.contactInputId}>
             Name
             <br />
             <input
@@ -98,19 +70,15 @@ export const ContactForm = ({ onSubmit }) => {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
               value={name}
-              // onChange={this.handleChange} //?
-              onChange={handleChange}
-              // id={this.contactInputId} //?
-              id={contactInputId}
+              onChange={this.handleChange}
+              id={this.contactInputId}
             />
           </label>
           <br />
 
         <label
           className={css.FormLabel}
-          // htmlFor={this.contactInputId} //?
-          htmlFor={contactInputId}
-        >
+          htmlFor={this.contactInputId}>
             Number
             <br />
             <input
@@ -121,10 +89,8 @@ export const ContactForm = ({ onSubmit }) => {
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
               value={number}
-              // onChange={this.handleChange} //?
-              onChange={handleChange}
-              // id={this.contactInputId} //?
-              id={contactInputId}
+              onChange={this.handleChange}
+              id={this.contactInputId}
             />
           </label>
           <br />
@@ -136,9 +102,8 @@ export const ContactForm = ({ onSubmit }) => {
           </button>
         </form>
     );
-
-  } 
-// } //?
+  }
+}
 
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
