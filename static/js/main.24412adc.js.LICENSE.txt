@@ -38,6 +38,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+//! 2-ой вариант
+
 //! lazy state initialization contacts
 
 //! useState ===> contacts (аналог this.state.contacts)
@@ -48,16 +50,8 @@
 
 //! Аналог componentDidMount()
 
-//! Аналог componentDidUpdate():
-
-//! Добавление контакта в this.state.contacts
-
 //! Если localStorage = null, записываем в contacts = []
 
-//! Запись contacts в localStorage
-
 //! Передача значений State (name, number) в App
-
-//! При изменении contacts записываем contacts в localStorage + Render
 
 //! При первом RENDER из localStorage записываем в contacts
