@@ -39,30 +39,38 @@ export const App = () => {
   //   const nextContacts = this.state.contacts;
 
   //   if (nextContacts !== prevContacts) {
-  //     //! записываю contacts в хранилище localStorage:
+  //     //? записываю contacts в хранилище localStorage:
   //     this.saveLocalStorage(nextContacts);
   //   }
   // }
 
 
+
+  //! useState ===> contacts (аналог this.state.contacts)
+  //! Аналог componentDidMount()
+  //! При первом RENDER из localStorage записываем в contacts
+  //! Если localStorage = null, записываем в contacts = []
+  //! lazy state initialization contacts
   const [contacts, setContacts] = useState( () =>
     JSON.parse(localStorage.getItem('contacts')) ?? []);
   
-  // console.log("useState contacts: ", contacts); //!
   
+  //! useState ===> filter (аналог this.state.filter)
   const [filter, setFilter] = useState('');
+
+  
+  //! Аналог componentDidUpdate():
+  //! При изменении contacts записываем contacts в localStorage + Render
+  useEffect(() => {
+    saveLocalStorage(contacts);
+  }, [contacts]);
+
+  
 
   //! Запись contacts в localStorage
   const saveLocalStorage = (contacts) => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   };
-
-  useEffect(() => {
-    saveLocalStorage(contacts);
-  }, [contacts]);
-
-
-  
 
 
 
@@ -84,7 +92,7 @@ export const App = () => {
 
 
 
-  //! NEW - передача пропсов name и number из ContactForm
+  //! Принимаем пропсы (name, number) из ContactForm
   //! alert с предупреждением о наявности контакта
   const formSubmitHandler = (name, number) => {
     // const contacts = this.state.contacts  //?
@@ -115,7 +123,7 @@ export const App = () => {
     const normalizedFilter = filter.toLowerCase();
 
     // console.log("getVisibleContacts contacts: ", contacts); //!
-    
+
     return contacts.filter(contact =>
       (contact.name.toLowerCase()).includes(normalizedFilter),
     );

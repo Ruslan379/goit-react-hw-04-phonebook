@@ -21,8 +21,11 @@ import css from 'components/ContactForm/ContactForm.module.css' //todo = ста�
 
 export const ContactForm = ({ onSubmit }) => {
 
+  //! useState ===> name (аналог this.state.name)
   const [name, setName] = useState('');
+  //! useState ===> number (аналог this.state.number)
   const [number, setNumber] = useState('');
+
 
   const contactInputId = nanoid();
   
@@ -63,6 +66,7 @@ export const ContactForm = ({ onSubmit }) => {
     event.preventDefault();
     // const { name, number } = this.state; //?
     // this.props.onSubmit(name, number); //?
+    //! Передача значений State (name, number) в App
     onSubmit(name, number);
     // this.reset(); //?
     reset(); 
