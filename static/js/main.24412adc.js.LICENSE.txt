@@ -38,9 +38,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-//! 2-ой вариант
+//! 1. Хранит State,
 
-//! lazy state initialization contacts
+//! 2. Инициализирует State из localStorage при первом RENDER
+
+//! 3. Каждый раз обновляет localStorage при обновлении State,
 
 //! useState ===> contacts (аналог this.state.contacts)
 
@@ -48,10 +50,8 @@
 
 //! useState ===> name (аналог this.state.name)
 
-//! Аналог componentDidMount()
-
-//! Если localStorage = null, записываем в contacts = []
+//! Используем Хук useLocalStorage (hooks/useLocalStorage):
 
 //! Передача значений State (name, number) в App
 
-//! При первом RENDER из localStorage записываем в contacts
+//! Хук useLocalStorage:
