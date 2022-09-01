@@ -1,28 +1,37 @@
 // import React, { Component } from 'react';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { nanoid } from 'nanoid';
 
+import useLocalStorage from 'hooks/useLocalStorage';
+// import useLocalStorage from '../../hooks/useLocalStorage';
 import { Container } from 'components/Container/Container';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
 
 
-const useLocalStorage = (key, defaultValue) => {
-  const [state, setState] = useState(() => {
-    return JSON.parse(localStorage.getItem(key)) ?? defaultValue
-  });
+//? Перенесен в '../../hooks/useLocalStorage';
+//! Хук useLocalStorage:
+//! 1. Хранит State,
+//! 2. Инициализирует State из localStorage
+//! 3. Каждый раз обновляет localStorage при обновлении State,
+// const useLocalStorage = (key, defaultValue) => {
+//   const [state, setState] = useState(() => {
+//     return JSON.parse(localStorage.getItem(key)) ?? defaultValue
+//   });
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
-  }, [state]);
+//   useEffect(() => {
+//     localStorage.setItem(key, JSON.stringify(state));
+//   }, [state]);
 
-  return [state, setState];
-}
+//   return [state, setState];
+// }
+//! ______________Хук useLocalStorage ____________________
 
 //? * +++++++++++++++++++++++++++ CLASS ++++++++++++++++++++++++++++++++++
 // export class App extends Component {
