@@ -75,7 +75,7 @@ export const App = () => {
 
 
   //! Создание нового массива объектов из this.state.contacts с учетом удаления контакта по его contact.id
-  const deleteTodo = contactId => {
+  const deleteContact = contactId => {
     setContacts(prevState => (prevState.filter(contact => contact.id !== contactId)));
   };
 
@@ -98,15 +98,21 @@ export const App = () => {
         <h2>Contacts</h2>
         <p>Total: {totalContacts}</p>
 
-        <Filter
+
+        {contacts.length > 0 &&
+          (<Filter
           value={filter}
           onChange={changeFilter}
-        />
+          />
+        )}
         
-        <ContactList
+
+        {contacts.length > 0 &&
+          (<ContactList
           visibleContacts={visibleContacts}
-          onDeleteTodo={deleteTodo}
-        />
+          onDeleteContact ={deleteContact}
+          />
+        )}
 
       </Container>
     );

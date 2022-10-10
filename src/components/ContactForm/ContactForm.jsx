@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { nanoid } from 'nanoid';
 
 import css from 'components/ContactForm/ContactForm.module.css' //todo = старый вариант импорта стилей
 
@@ -17,8 +16,6 @@ export const ContactForm = ({ onSubmit }) => {
   const [number, setNumber] = useState('');
 
 
-  const contactInputId = nanoid();
-  
 
 // * +++++++++++++++++++++++++++ МЕТОДЫ ++++++++++++++++++++++++++++++++++
   //! Ввод значений в поля инпутов
@@ -66,10 +63,7 @@ export const ContactForm = ({ onSubmit }) => {
         onSubmit={handleSubmit}
       >
 
-        <label
-          className={css.FormLabel}
-          htmlFor={contactInputId}
-        >
+        <label className={css.FormLabel}>
             Name
             <br />
             <input
@@ -81,15 +75,11 @@ export const ContactForm = ({ onSubmit }) => {
               required
               value={name}
               onChange={handleChange}
-              id={contactInputId}
             />
           </label>
           <br />
 
-        <label
-          className={css.FormLabel}
-          htmlFor={contactInputId}
-        >
+        <label className={css.FormLabel}>
             Number
             <br />
             <input
@@ -101,7 +91,6 @@ export const ContactForm = ({ onSubmit }) => {
               required
               value={number}
               onChange={handleChange}
-              id={contactInputId}
             />
           </label>
           <br />
