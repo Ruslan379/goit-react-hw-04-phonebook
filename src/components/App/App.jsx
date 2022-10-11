@@ -53,7 +53,6 @@ export const App = () => {
       return;
     } 
     addСontact(name, number); 
-    
   };
 
 
