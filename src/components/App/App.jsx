@@ -98,21 +98,19 @@ export const App = () => {
         <h2>Contacts</h2>
         <p>Total: {totalContacts}</p>
 
-
-        {contacts.length > 0 &&
-          (<Filter
-          value={filter}
-          onChange={changeFilter}
-          />
+        {contacts.length > 0 && (
+          <>
+            <Filter
+              value={filter}
+              onChange={changeFilter}
+            />
+            
+            <ContactList
+              visibleContacts={visibleContacts}
+              onDeleteContact ={deleteContact}
+            />
+          </>
         )}
-        
-
-        {contacts.length > 0 &&
-          (<ContactList
-          visibleContacts={visibleContacts}
-          onDeleteContact ={deleteContact}
-          />
-          )}
         
         <ToastContainer autoClose={1000} />
 
