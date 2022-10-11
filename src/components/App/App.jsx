@@ -45,14 +45,15 @@ export const App = () => {
   //! Принимаем пропсы (name, number) из ContactForm
   //! alert с предупреждением о наявности контакта
   const formSubmitHandler = (name, number) => {
-    
-    if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
+    if (
+      contacts.find(item => item.name.toLowerCase() === name.toLowerCase())
+    ) {
       alert(`${name} is already in contacts.`);
       toast.warning(`${name} уже есть в контактах.`); 
       return;
-    } else {
-      addСontact(name, number); 
-      }
+    } 
+    addСontact(name, number); 
+    
   };
 
 
@@ -89,7 +90,6 @@ export const App = () => {
 // * +++++++++++++++++++++++++++ MARKUP ++++++++++++++++++++++++++++++++++
     return (
       <Container>
-        <ToastContainer autoClose={1000} />
 
         <h1>Phonebook</h1>
 
@@ -112,7 +112,9 @@ export const App = () => {
           visibleContacts={visibleContacts}
           onDeleteContact ={deleteContact}
           />
-        )}
+          )}
+        
+        <ToastContainer autoClose={1000} />
 
       </Container>
     );
